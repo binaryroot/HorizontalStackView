@@ -22,214 +22,214 @@ import android.widget.ListView;
 
 public abstract class AdapterView<T extends Adapter> extends ViewGroup {
 
- /**
- * The item view type returned by {@link Adapter#getItemViewType(int)} when
- * the adapter does not want the item's view recycled.
- */
-public static final int ITEM_VIEW_TYPE_IGNORE = -1;
-
-/**
- * The item view type returned by {@link Adapter#getItemViewType(int)} when
- * the item is a header or footer.
- */
-public static final int ITEM_VIEW_TYPE_HEADER_OR_FOOTER = -2;
-
-/**
- * The position of the first child displayed
- */
-@ViewDebug.ExportedProperty(category = "scrolling")
-int mFirstPosition = 0;
-
-        /**
-         * The offset in pixels from the top of the AdapterView to the top
-         * of the view to select during the next layout.
-         */
-        int mSpecificTop;
-
-        /**
-         * Position from which to start looking for mSyncRowId
-         */
-        int mSyncPosition;
-
-        /**
-         * Row id to look for when data has changed
-         */
-        long mSyncRowId = INVALID_ROW_ID;
-
-        /**
-         * Height of the view when mSyncPosition and mSyncRowId where set
-         */
-        long mSyncHeight;
-
-        /**
-         * True if we need to sync to mSyncRowId
-         */
-        boolean mNeedSync = false;
-
-        /**
-         * Indicates whether to sync based on the selection or position. Possible
-         * values are {@link #SYNC_SELECTED_POSITION} or
-         * {@link #SYNC_FIRST_POSITION}.
-         */
-        int mSyncMode;
-
-/**
- * Our height after the last layout
- */
-private int mLayoutHeight;
-
-/**
- * Sync based on the selected child
- */
-static final int SYNC_SELECTED_POSITION = 0;
-
-/**
- * Sync based on the first child displayed
- */
-static final int SYNC_FIRST_POSITION = 1;
-
-/**
- * Maximum amount of time to spend in {@link #findSyncPosition()}
- */
-static final int SYNC_MAX_DURATION_MILLIS = 100;
-
-        /**
-         * Indicates that this view is currently being laid out.
-         */
-        boolean mInLayout = false;
-
-        /**
-         * The listener that receives notifications when an item is selected.
-         */
-        OnItemSelectedListener mOnItemSelectedListener;
-
-        /**
-         * The listener that receives notifications when an item is clicked.
-         */
-        OnItemClickListener mOnItemClickListener;
-
-        /**
-         * The listener that receives notifications when an item is long clicked.
-         */
-        OnItemLongClickListener mOnItemLongClickListener;
-
-        /**
-         * True if the data has changed since the last layout
-         */
-        boolean mDataChanged;
-
-/**
- * The position within the adapter's data set of the item to select
- * during the next layout.
- */
-@ViewDebug.ExportedProperty(category = "list")
-int mNextSelectedPosition = INVALID_POSITION;
-
-        /**
-         * The item id of the item to select during the next layout.
-         */
-        long mNextSelectedRowId = INVALID_ROW_ID;
-
-/**
- * The position within the adapter's data set of the currently selected item.
- */
-@ViewDebug.ExportedProperty(category = "list")
-int mSelectedPosition = INVALID_POSITION;
-
-        /**
-         * The item id of the currently selected item.
-         */
-        long mSelectedRowId = INVALID_ROW_ID;
-
-/**
- * View to show if there are no items to show.
- */
-private View mEmptyView;
-
-/**
- * The number of items in the current adapter.
- */
-@ViewDebug.ExportedProperty(category = "list")
-int mItemCount;
-
-        /**
-         * The number of items in the adapter before a data changed event occurred.
-         */
-        int mOldItemCount;
-
-/**
- * Represents an invalid position. All valid positions are in the range 0 to 1 less than the
- * number of items in the current adapter.
- */
-public static final int INVALID_POSITION = -1;
-
-/**
- * Represents an empty or invalid row id
- */
-public static final long INVALID_ROW_ID = Long.MIN_VALUE;
-
-        /**
-         * The last selected position we used when notifying
-         */
-        int mOldSelectedPosition = INVALID_POSITION;
-
-        /**
-         * The id of the last selected position we used when notifying
-         */
-        long mOldSelectedRowId = INVALID_ROW_ID;
-
-/**
- * Indicates what focusable state is requested when calling setFocusable().
- * In addition to this, this view has other criteria for actually
- * determining the focusable state (such as whether its empty or the text
- * filter is shown).
- *
- * @see #setFocusable(boolean)
- * @see #checkFocus()
- */
-private boolean mDesiredFocusableState;
-private boolean mDesiredFocusableInTouchModeState;
-
-private SelectionNotifier mSelectionNotifier;
-        /**
-         * When set to true, calls to requestLayout() will not propagate up the parent hierarchy.
-         * This is used to layout the children during a layout pass.
-         */
-        boolean mBlockLayoutRequests = false;
-
-public AdapterView(Context context) {
-        super(context);
-        }
-
-public AdapterView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        }
-
-public AdapterView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        }
-
-/**
- * Interface definition for a callback to be invoked when an item in this
- * AdapterView has been clicked.
- */
-public interface OnItemClickListener {
+    /**
+     * The item view type returned by {@link Adapter#getItemViewType(int)} when
+     * the adapter does not want the item's view recycled.
+     */
+    public static final int ITEM_VIEW_TYPE_IGNORE = -1;
 
     /**
-     * Callback method to be invoked when an item in this AdapterView has
-     * been clicked.
-     * <p>
-     * Implementers can call getItemAtPosition(position) if they need
-     * to access the data associated with the selected item.
-     *
-     * @param parent The AdapterView where the click happened.
-     * @param view The view within the AdapterView that was clicked (this
-     *            will be a view provided by the adapter)
-     * @param position The position of the view in the adapter.
-     * @param id The row id of the item that was clicked.
+     * The item view type returned by {@link Adapter#getItemViewType(int)} when
+     * the item is a header or footer.
      */
-    void onItemClick(AdapterView<?> parent, View view, int position, long id);
-}
+    public static final int ITEM_VIEW_TYPE_HEADER_OR_FOOTER = -2;
+
+    /**
+     * The position of the first child displayed
+     */
+    @ViewDebug.ExportedProperty(category = "scrolling")
+    int mFirstPosition = 0;
+
+    /**
+     * The offset in pixels from the top of the AdapterView to the top
+     * of the view to select during the next layout.
+     */
+    int mSpecificTop;
+
+    /**
+     * Position from which to start looking for mSyncRowId
+     */
+    int mSyncPosition;
+
+    /**
+     * Row id to look for when data has changed
+     */
+    long mSyncRowId = INVALID_ROW_ID;
+
+    /**
+     * Height of the view when mSyncPosition and mSyncRowId where set
+     */
+    long mSyncHeight;
+
+    /**
+     * True if we need to sync to mSyncRowId
+     */
+    boolean mNeedSync = false;
+
+    /**
+     * Indicates whether to sync based on the selection or position. Possible
+     * values are {@link #SYNC_SELECTED_POSITION} or
+     * {@link #SYNC_FIRST_POSITION}.
+     */
+    int mSyncMode;
+
+    /**
+     * Our height after the last layout
+     */
+    private int mLayoutHeight;
+
+    /**
+     * Sync based on the selected child
+     */
+    static final int SYNC_SELECTED_POSITION = 0;
+
+    /**
+     * Sync based on the first child displayed
+     */
+    static final int SYNC_FIRST_POSITION = 1;
+
+    /**
+     * Maximum amount of time to spend in {@link #findSyncPosition()}
+     */
+    static final int SYNC_MAX_DURATION_MILLIS = 100;
+
+    /**
+     * Indicates that this view is currently being laid out.
+     */
+    boolean mInLayout = false;
+
+    /**
+     * The listener that receives notifications when an item is selected.
+     */
+    OnItemSelectedListener mOnItemSelectedListener;
+
+    /**
+     * The listener that receives notifications when an item is clicked.
+     */
+    OnItemClickListener mOnItemClickListener;
+
+    /**
+     * The listener that receives notifications when an item is long clicked.
+     */
+    OnItemLongClickListener mOnItemLongClickListener;
+
+    /**
+     * True if the data has changed since the last layout
+     */
+    boolean mDataChanged;
+
+    /**
+     * The position within the adapter's data set of the item to select
+     * during the next layout.
+     */
+    @ViewDebug.ExportedProperty(category = "list")
+    int mNextSelectedPosition = INVALID_POSITION;
+
+    /**
+     * The item id of the item to select during the next layout.
+     */
+    long mNextSelectedRowId = INVALID_ROW_ID;
+
+    /**
+     * The position within the adapter's data set of the currently selected item.
+     */
+    @ViewDebug.ExportedProperty(category = "list")
+    int mSelectedPosition = INVALID_POSITION;
+
+    /**
+     * The item id of the currently selected item.
+     */
+    long mSelectedRowId = INVALID_ROW_ID;
+
+    /**
+     * View to show if there are no items to show.
+     */
+    private View mEmptyView;
+
+    /**
+     * The number of items in the current adapter.
+     */
+    @ViewDebug.ExportedProperty(category = "list")
+    int mItemCount;
+
+    /**
+     * The number of items in the adapter before a data changed event occurred.
+     */
+    int mOldItemCount;
+
+    /**
+     * Represents an invalid position. All valid positions are in the range 0 to 1 less than the
+     * number of items in the current adapter.
+     */
+    public static final int INVALID_POSITION = -1;
+
+    /**
+     * Represents an empty or invalid row id
+     */
+    public static final long INVALID_ROW_ID = Long.MIN_VALUE;
+
+    /**
+     * The last selected position we used when notifying
+     */
+    int mOldSelectedPosition = INVALID_POSITION;
+
+    /**
+     * The id of the last selected position we used when notifying
+     */
+    long mOldSelectedRowId = INVALID_ROW_ID;
+
+    /**
+     * Indicates what focusable state is requested when calling setFocusable().
+     * In addition to this, this view has other criteria for actually
+     * determining the focusable state (such as whether its empty or the text
+     * filter is shown).
+     *
+     * @see #setFocusable(boolean)
+     * @see #checkFocus()
+     */
+    private boolean mDesiredFocusableState;
+    private boolean mDesiredFocusableInTouchModeState;
+
+    private SelectionNotifier mSelectionNotifier;
+    /**
+     * When set to true, calls to requestLayout() will not propagate up the parent hierarchy.
+     * This is used to layout the children during a layout pass.
+     */
+    boolean mBlockLayoutRequests = false;
+
+    public AdapterView(Context context) {
+        super(context);
+    }
+
+    public AdapterView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public AdapterView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
+    /**
+     * Interface definition for a callback to be invoked when an item in this
+     * AdapterView has been clicked.
+     */
+    public interface OnItemClickListener {
+
+        /**
+         * Callback method to be invoked when an item in this AdapterView has
+         * been clicked.
+         * <p/>
+         * Implementers can call getItemAtPosition(position) if they need
+         * to access the data associated with the selected item.
+         *
+         * @param parent   The AdapterView where the click happened.
+         * @param view     The view within the AdapterView that was clicked (this
+         *                 will be a view provided by the adapter)
+         * @param position The position of the view in the adapter.
+         * @param id       The row id of the item that was clicked.
+         */
+        void onItemClick(AdapterView<?> parent, View view, int position, long id);
+    }
 
     /**
      * Register a callback to be invoked when an item in this AdapterView has
@@ -243,7 +243,7 @@ public interface OnItemClickListener {
 
     /**
      * @return The callback to be invoked with an item in this AdapterView has
-     *         been clicked, or null id no callback has been set.
+     * been clicked, or null id no callback has been set.
      */
     public final OnItemClickListener getOnItemClickListener() {
         return mOnItemClickListener;
@@ -252,11 +252,11 @@ public interface OnItemClickListener {
     /**
      * Call the OnItemClickListener, if it is defined.
      *
-     * @param view The view within the AdapterView that was clicked.
+     * @param view     The view within the AdapterView that was clicked.
      * @param position The position of the view in the adapter.
-     * @param id The row id of the item that was clicked.
+     * @param id       The row id of the item that was clicked.
      * @return True if there was an assigned OnItemClickListener that was
-     *         called, false otherwise is returned.
+     * called, false otherwise is returned.
      */
     public boolean performItemClick(View view, int position, long id) {
         if (mOnItemClickListener != null) {
@@ -271,27 +271,26 @@ public interface OnItemClickListener {
         return false;
     }
 
-/**
- * Interface definition for a callback to be invoked when an item in this
- * view has been clicked and held.
- */
-public interface OnItemLongClickListener {
     /**
-     * Callback method to be invoked when an item in this view has been
-     * clicked and held.
-     *
-     * Implementers can call getItemAtPosition(position) if they need to access
-     * the data associated with the selected item.
-     *
-     * @param parent The AbsListView where the click happened
-     * @param view The view within the AbsListView that was clicked
-     * @param position The position of the view in the list
-     * @param id The row id of the item that was clicked
-     *
-     * @return true if the callback consumed the long click, false otherwise
+     * Interface definition for a callback to be invoked when an item in this
+     * view has been clicked and held.
      */
-    boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id);
-}
+    public interface OnItemLongClickListener {
+        /**
+         * Callback method to be invoked when an item in this view has been
+         * clicked and held.
+         * <p/>
+         * Implementers can call getItemAtPosition(position) if they need to access
+         * the data associated with the selected item.
+         *
+         * @param parent   The AbsListView where the click happened
+         * @param view     The view within the AbsListView that was clicked
+         * @param position The position of the view in the list
+         * @param id       The row id of the item that was clicked
+         * @return true if the callback consumed the long click, false otherwise
+         */
+        boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id);
+    }
 
 
     /**
@@ -309,42 +308,42 @@ public interface OnItemLongClickListener {
 
     /**
      * @return The callback to be invoked with an item in this AdapterView has
-     *         been clicked and held, or null id no callback as been set.
+     * been clicked and held, or null id no callback as been set.
      */
     public final OnItemLongClickListener getOnItemLongClickListener() {
         return mOnItemLongClickListener;
     }
 
-/**
- * Interface definition for a callback to be invoked when
- * an item in this view has been selected.
- */
-public interface OnItemSelectedListener {
     /**
-     * <p>Callback method to be invoked when an item in this view has been
-     * selected. This callback is invoked only when the newly selected
-     * position is different from the previously selected position or if
-     * there was no selected item.</p>
-     *
-     * Impelmenters can call getItemAtPosition(position) if they need to access the
-     * data associated with the selected item.
-     *
-     * @param parent The AdapterView where the selection happened
-     * @param view The view within the AdapterView that was clicked
-     * @param position The position of the view in the adapter
-     * @param id The row id of the item that is selected
+     * Interface definition for a callback to be invoked when
+     * an item in this view has been selected.
      */
-    void onItemSelected(AdapterView<?> parent, View view, int position, long id);
+    public interface OnItemSelectedListener {
+        /**
+         * <p>Callback method to be invoked when an item in this view has been
+         * selected. This callback is invoked only when the newly selected
+         * position is different from the previously selected position or if
+         * there was no selected item.</p>
+         * <p/>
+         * Impelmenters can call getItemAtPosition(position) if they need to access the
+         * data associated with the selected item.
+         *
+         * @param parent   The AdapterView where the selection happened
+         * @param view     The view within the AdapterView that was clicked
+         * @param position The position of the view in the adapter
+         * @param id       The row id of the item that is selected
+         */
+        void onItemSelected(AdapterView<?> parent, View view, int position, long id);
 
-    /**
-     * Callback method to be invoked when the selection disappears from this
-     * view. The selection can disappear for instance when touch is activated
-     * or when the adapter becomes empty.
-     *
-     * @param parent The AdapterView that now contains no selected item.
-     */
-    void onNothingSelected(AdapterView<?> parent);
-}
+        /**
+         * Callback method to be invoked when the selection disappears from this
+         * view. The selection can disappear for instance when touch is activated
+         * or when the adapter becomes empty.
+         *
+         * @param parent The AdapterView that now contains no selected item.
+         */
+        void onNothingSelected(AdapterView<?> parent);
+    }
 
 
     /**
@@ -361,37 +360,36 @@ public interface OnItemSelectedListener {
         return mOnItemSelectedListener;
     }
 
-/**
- * Extra menu information provided to the
- * {@link android.view.View.OnCreateContextMenuListener#onCreateContextMenu(ContextMenu, View, ContextMenuInfo) }
- * callback when a context menu is brought up for this AdapterView.
- *
- */
-public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInfo {
+    /**
+     * Extra menu information provided to the
+     * {@link android.view.View.OnCreateContextMenuListener#onCreateContextMenu(ContextMenu, View, ContextMenuInfo) }
+     * callback when a context menu is brought up for this AdapterView.
+     */
+    public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInfo {
 
-    public AdapterContextMenuInfo(View targetView, int position, long id) {
-        this.targetView = targetView;
-        this.position = position;
-        this.id = id;
+        public AdapterContextMenuInfo(View targetView, int position, long id) {
+            this.targetView = targetView;
+            this.position = position;
+            this.id = id;
+        }
+
+        /**
+         * The child view for which the context menu is being displayed. This
+         * will be one of the children of this AdapterView.
+         */
+        public View targetView;
+
+        /**
+         * The position in the adapter for which the context menu is being
+         * displayed.
+         */
+        public int position;
+
+        /**
+         * The row id of the item for which the context menu is being displayed.
+         */
+        public long id;
     }
-
-    /**
-     * The child view for which the context menu is being displayed. This
-     * will be one of the children of this AdapterView.
-     */
-    public View targetView;
-
-    /**
-     * The position in the adapter for which the context menu is being
-     * displayed.
-     */
-    public int position;
-
-    /**
-     * The row id of the item for which the context menu is being displayed.
-     */
-    public long id;
-}
 
     /**
      * Returns the adapter currently associated with this widget.
@@ -412,7 +410,6 @@ public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInf
      * This method is not supported and throws an UnsupportedOperationException when called.
      *
      * @param child Ignored.
-     *
      * @throws UnsupportedOperationException Every time this method is invoked.
      */
     @Override
@@ -425,7 +422,6 @@ public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInf
      *
      * @param child Ignored.
      * @param index Ignored.
-     *
      * @throws UnsupportedOperationException Every time this method is invoked.
      */
     @Override
@@ -436,9 +432,8 @@ public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInf
     /**
      * This method is not supported and throws an UnsupportedOperationException when called.
      *
-     * @param child Ignored.
+     * @param child  Ignored.
      * @param params Ignored.
-     *
      * @throws UnsupportedOperationException Every time this method is invoked.
      */
     @Override
@@ -450,10 +445,9 @@ public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInf
     /**
      * This method is not supported and throws an UnsupportedOperationException when called.
      *
-     * @param child Ignored.
-     * @param index Ignored.
+     * @param child  Ignored.
+     * @param index  Ignored.
      * @param params Ignored.
-     *
      * @throws UnsupportedOperationException Every time this method is invoked.
      */
     @Override
@@ -466,7 +460,6 @@ public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInf
      * This method is not supported and throws an UnsupportedOperationException when called.
      *
      * @param child Ignored.
-     *
      * @throws UnsupportedOperationException Every time this method is invoked.
      */
     @Override
@@ -478,7 +471,6 @@ public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInf
      * This method is not supported and throws an UnsupportedOperationException when called.
      *
      * @param index Ignored.
-     *
      * @throws UnsupportedOperationException Every time this method is invoked.
      */
     @Override
@@ -542,8 +534,8 @@ public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInf
 
     /**
      * @return The number of items owned by the Adapter associated with this
-     *         AdapterView. (This is the number of data items, which may be
-     *         larger than the number of visible views.)
+     * AdapterView. (This is the number of data items, which may be
+     * larger than the number of visible views.)
      */
     @ViewDebug.CapturedViewProperty
     public int getCount() {
@@ -555,9 +547,9 @@ public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInf
      * or a descendant of an adapter item.
      *
      * @param view an adapter item, or a descendant of an adapter item. This must be visible in this
-     *        AdapterView at the time of the call.
+     *             AdapterView at the time of the call.
      * @return the position within the adapter's data set of the view, or {@link #INVALID_POSITION}
-     *         if the view does not correspond to a list item (or it is not currently visible).
+     * if the view does not correspond to a list item (or it is not currently visible).
      */
     public int getPositionForView(View view) {
         View listItem = view;
@@ -754,56 +746,56 @@ public static class AdapterContextMenuInfo implements ContextMenu.ContextMenuInf
         dispatchThawSelfOnly(container);
     }
 
-class AdapterDataSetObserver extends DataSetObserver {
+    class AdapterDataSetObserver extends DataSetObserver {
 
-    private Parcelable mInstanceState = null;
+        private Parcelable mInstanceState = null;
 
-    @Override
-    public void onChanged() {
-        mDataChanged = true;
-        mOldItemCount = mItemCount;
-        mItemCount = getAdapter().getCount();
+        @Override
+        public void onChanged() {
+            mDataChanged = true;
+            mOldItemCount = mItemCount;
+            mItemCount = getAdapter().getCount();
 
-        // Detect the case where a cursor that was previously invalidated has
-        // been repopulated with new data.
-        if (AdapterView.this.getAdapter().hasStableIds() && mInstanceState != null
-                && mOldItemCount == 0 && mItemCount > 0) {
-            AdapterView.this.onRestoreInstanceState(mInstanceState);
+            // Detect the case where a cursor that was previously invalidated has
+            // been repopulated with new data.
+            if (AdapterView.this.getAdapter().hasStableIds() && mInstanceState != null
+                    && mOldItemCount == 0 && mItemCount > 0) {
+                AdapterView.this.onRestoreInstanceState(mInstanceState);
+                mInstanceState = null;
+            } else {
+                rememberSyncState();
+            }
+            checkFocus();
+            requestLayout();
+        }
+
+        @Override
+        public void onInvalidated() {
+            mDataChanged = true;
+
+            if (AdapterView.this.getAdapter().hasStableIds()) {
+                // Remember the current state for the case where our hosting activity is being
+                // stopped and later restarted
+                mInstanceState = AdapterView.this.onSaveInstanceState();
+            }
+
+            // Data is invalid so we should reset our state
+            mOldItemCount = mItemCount;
+            mItemCount = 0;
+            mSelectedPosition = INVALID_POSITION;
+            mSelectedRowId = INVALID_ROW_ID;
+            mNextSelectedPosition = INVALID_POSITION;
+            mNextSelectedRowId = INVALID_ROW_ID;
+            mNeedSync = false;
+
+            checkFocus();
+            requestLayout();
+        }
+
+        public void clearSavedState() {
             mInstanceState = null;
-        } else {
-            rememberSyncState();
         }
-        checkFocus();
-        requestLayout();
     }
-
-    @Override
-    public void onInvalidated() {
-        mDataChanged = true;
-
-        if (AdapterView.this.getAdapter().hasStableIds()) {
-            // Remember the current state for the case where our hosting activity is being
-            // stopped and later restarted
-            mInstanceState = AdapterView.this.onSaveInstanceState();
-        }
-
-        // Data is invalid so we should reset our state
-        mOldItemCount = mItemCount;
-        mItemCount = 0;
-        mSelectedPosition = INVALID_POSITION;
-        mSelectedRowId = INVALID_ROW_ID;
-        mNextSelectedPosition = INVALID_POSITION;
-        mNextSelectedRowId = INVALID_ROW_ID;
-        mNeedSync = false;
-
-        checkFocus();
-        requestLayout();
-    }
-
-    public void clearSavedState() {
-        mInstanceState = null;
-    }
-}
 
     @Override
     protected void onDetachedFromWindow() {
@@ -811,20 +803,20 @@ class AdapterDataSetObserver extends DataSetObserver {
         removeCallbacks(mSelectionNotifier);
     }
 
-private class SelectionNotifier implements Runnable {
-    public void run() {
-        if (mDataChanged) {
-            // Data has changed between when this SelectionNotifier
-            // was posted and now. We need to wait until the AdapterView
-            // has been synched to the new data.
-            if (getAdapter() != null) {
-                post(this);
+    private class SelectionNotifier implements Runnable {
+        public void run() {
+            if (mDataChanged) {
+                // Data has changed between when this SelectionNotifier
+                // was posted and now. We need to wait until the AdapterView
+                // has been synched to the new data.
+                if (getAdapter() != null) {
+                    post(this);
+                }
+            } else {
+                fireOnSelected();
             }
-        } else {
-            fireOnSelected();
         }
     }
-}
 
     void selectionChanged() {
         if (mOnItemSelectedListener != null) {
@@ -1002,7 +994,7 @@ private class SelectionNotifier implements Runnable {
      * 2) we run out of time, or 3) we have looked at every position
      *
      * @return Position of the row that matches mSyncRowId, or {@link #INVALID_POSITION} if it can't
-     *         be found
+     * be found
      */
     int findSyncPosition() {
         int count = mItemCount;
@@ -1089,7 +1081,7 @@ private class SelectionNotifier implements Runnable {
      * @param position The starting position to look at.
      * @param lookDown Whether to look down for other positions.
      * @return The next selectable position starting at position and then searching either up or
-     *         down. Returns {@link #INVALID_POSITION} if nothing can be found.
+     * down. Returns {@link #INVALID_POSITION} if nothing can be found.
      */
     int lookForSelectablePosition(int position, boolean lookDown) {
         return position;
@@ -1097,6 +1089,7 @@ private class SelectionNotifier implements Runnable {
 
     /**
      * Utility to keep mSelectedPosition and mSelectedRowId in sync
+     *
      * @param position Our current position
      */
     void setSelectedPositionInt(int position) {
@@ -1106,8 +1099,9 @@ private class SelectionNotifier implements Runnable {
 
     /**
      * Utility to keep mNextSelectedPosition and mNextSelectedRowId in sync
+     *
      * @param position Intended value for mSelectedPosition the next time we go
-     * through layout
+     *                 through layout
      */
     void setNextSelectedPositionInt(int position) {
         mNextSelectedPosition = position;
@@ -1122,7 +1116,6 @@ private class SelectionNotifier implements Runnable {
     /**
      * Remember enough information to restore the screen state when the data has
      * changed.
-     *
      */
     void rememberSyncState() {
         if (getChildCount() > 0) {
@@ -1154,11 +1147,12 @@ private class SelectionNotifier implements Runnable {
             }
         }
     }
+
     protected boolean isTransformedTouchPointInView(float x, float y, View child, PointF outLocalPoint) {
         //Log.d(TAG, "isTranformedTouchPointInView()");
         final Rect frame = new Rect();
         child.getHitRect(frame);
-        if(frame.contains((int)x, (int)y)) {
+        if (frame.contains((int) x, (int) y)) {
             return true;
         }
         return false;

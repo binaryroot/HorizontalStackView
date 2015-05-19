@@ -3,6 +3,7 @@ package com.stackview;
 /**
  * Created by binary on 5/19/15.
  */
+
 import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public abstract class AdapterViewAnimator extends AdapterView<Adapter>
-        implements  Advanceable {
+        implements Advanceable {
     private static final String TAG = "RemoteViewAnimator";
 
     /**
@@ -47,8 +48,8 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
     boolean mAnimateFirstTime = true;
 
     /**
-     *  Represents where the in the current window of
-     *  views the current <code>mDisplayedChild</code> sits
+     * Represents where the in the current window of
+     * views the current <code>mDisplayedChild</code> sits
      */
     int mActiveOffset = 0;
 
@@ -206,11 +207,11 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
      * desired number of views, and specify the offset
      *
      * @param numVisibleViews The number of views the animator keeps in the {@link ViewGroup}
-     * @param activeOffset This parameter specifies where the current index ({@link #mWhichChild})
-     *        sits within the window. For example if activeOffset is 1, and numVisibleViews is 3,
-     *        and {@link #setDisplayedChild(int)} is called with 10, then the effective window will
-     *        be the indexes 9, 10, and 11. In the same example, if activeOffset were 0, then the
-     *        window would instead contain indexes 10, 11 and 12.
+     * @param activeOffset    This parameter specifies where the current index ({@link #mWhichChild})
+     *                        sits within the window. For example if activeOffset is 1, and numVisibleViews is 3,
+     *                        and {@link #setDisplayedChild(int)} is called with 10, then the effective window will
+     *                        be the indexes 9, 10, and 11. In the same example, if activeOffset were 0, then the
+     *                        window would instead contain indexes 10, 11 and 12.
      */
     void configureViewAnimator(int numVisibleViews, int activeOffset) {
         if (activeOffset > numVisibleViews - 1) {
@@ -230,10 +231,10 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
      * the set of visible views
      *
      * @param fromIndex The relative index within the window that the view was in, -1 if it wasn't
-     *        in the window
-     * @param toIndex The relative index within the window that the view is going to, -1 if it is
-     *        being removed
-     * @param view The view that is being animated
+     *                  in the window
+     * @param toIndex   The relative index within the window that the view is going to, -1 if it is
+     *                  being removed
+     * @param view      The view that is being animated
      */
     void transformViewForTransition(int fromIndex, int toIndex, View view, boolean animate) {
         if (fromIndex == -1) {
@@ -352,7 +353,7 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
         if (mAdapter != null) {
             int adapterCount = getCount();
             if (adapterCount <= getNumActiveViews() && mLoopViews) {
-                return adapterCount*mMaxNumActiveViews;
+                return adapterCount * mMaxNumActiveViews;
             } else {
                 return adapterCount;
             }
@@ -362,7 +363,7 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
     }
 
     private ViewAndMetaData getMetaDataForChild(View child) {
-        for (ViewAndMetaData vm: mViewsMap.values()) {
+        for (ViewAndMetaData vm : mViewsMap.values()) {
             if (vm.view == child) {
                 return vm;
             }
@@ -418,8 +419,8 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
      * {@link #getInAnimation() in animation}.
      *
      * @param childIndex The index of the child to be shown.
-     * @param animate Whether or not to use the in and out animations, defaults
-     *            to true.
+     * @param animate    Whether or not to use the in and out animations, defaults
+     *                   to true.
      */
     void showOnly(int childIndex, boolean animate) {
         if (mAdapter == null) return;
@@ -593,8 +594,10 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
                 }
                 break;
             }
-            case MotionEvent.ACTION_MOVE: break;
-            case MotionEvent.ACTION_POINTER_UP: break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                break;
             case MotionEvent.ACTION_UP: {
                 if (mTouchMode == TOUCH_MODE_DOWN_IN_CURRENT_VIEW) {
                     final View v = getCurrentView();
@@ -806,7 +809,6 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
      * Returns the View corresponding to the currently displayed child.
      *
      * @return The View currently displayed.
-     *
      * @see #getDisplayedChild()
      */
     public View getCurrentView() {
@@ -817,7 +819,6 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
      * Returns the current animation used to animate a View that enters the screen.
      *
      * @return An Animation or null if none is set.
-     *
      * @see #setInAnimation(android.animation.ObjectAnimator)
      * @see #setInAnimation(android.content.Context, int)
      */
@@ -829,7 +830,6 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
      * Specifies the animation used to animate a View that enters the screen.
      *
      * @param inAnimation The animation started when a View enters the screen.
-     *
      * @see #getInAnimation()
      * @see #setInAnimation(android.content.Context, int)
      */
@@ -841,7 +841,6 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
      * Returns the current animation used to animate a View that exits the screen.
      *
      * @return An Animation or null if none is set.
-     *
      * @see #setOutAnimation(android.animation.ObjectAnimator)
      * @see #setOutAnimation(android.content.Context, int)
      */
@@ -853,7 +852,6 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
      * Specifies the animation used to animate a View that exit the screen.
      *
      * @param outAnimation The animation started when a View exit the screen.
-     *
      * @see #getOutAnimation()
      * @see #setOutAnimation(android.content.Context, int)
      */
@@ -864,9 +862,8 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
     /**
      * Specifies the animation used to animate a View that enters the screen.
      *
-     * @param context The application's environment.
+     * @param context    The application's environment.
      * @param resourceID The resource id of the animation.
-     *
      * @see #getInAnimation()
      * @see #setInAnimation(android.animation.ObjectAnimator)
      */
@@ -877,9 +874,8 @@ public abstract class AdapterViewAnimator extends AdapterView<Adapter>
     /**
      * Specifies the animation used to animate a View that exit the screen.
      *
-     * @param context The application's environment.
+     * @param context    The application's environment.
      * @param resourceID The resource id of the animation.
-     *
      * @see #getOutAnimation()
      * @see #setOutAnimation(android.animation.ObjectAnimator)
      */

@@ -3,6 +3,7 @@ package com.stackview;
 /**
  * Created by binary on 5/19/15.
  */
+
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
@@ -224,7 +225,7 @@ public class StackViewVertical extends AdapterViewAnimator {
             lp.setHorizontalOffset(0);
         }
 
-        if (fromIndex == -1 && toIndex == getNumActiveViews() -1) {
+        if (fromIndex == -1 && toIndex == getNumActiveViews() - 1) {
             transformViewAtIndex(toIndex, view, false);
             view.setVisibility(VISIBLE);
             view.setAlpha(1.0f);
@@ -305,7 +306,7 @@ public class StackViewVertical extends AdapterViewAnimator {
     private void transformViewAtIndex(int index, final View view, boolean animate) {
 
         //TODO: fix this workaround, item doesn't show when adapter size == 1
-        if(getAdapter().getCount() == 1) {
+        if (getAdapter().getCount() == 1) {
             return;
         }
 
@@ -330,9 +331,9 @@ public class StackViewVertical extends AdapterViewAnimator {
         final float transY = perspectiveTranslationY + scaleShiftCorrectionY;
 
         float perspectiveTranslationX = (1 - r) * maxPerspectiveShiftX;
-        float scaleShiftCorrectionX =  (1 - scale) *
+        float scaleShiftCorrectionX = (1 - scale) *
                 (getMeasuredWidth() * (1 - PERSPECTIVE_SHIFT_FACTOR_X) / 2.0f);
-        final float transX = perspectiveTranslationX + (scaleShiftCorrectionX/10);
+        final float transX = perspectiveTranslationX + (scaleShiftCorrectionX / 10);
 
         // If this view is currently being animated for a certain position, we need to cancel
         // this animation so as not to interfere with the new transformation.
@@ -525,7 +526,7 @@ public class StackViewVertical extends AdapterViewAnimator {
         canvas.getClipBounds(stackInvalidateRect);
         final int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
-            final View child =  getChildAt(i);
+            final View child = getChildAt(i);
             LayoutParams lp = (LayoutParams) child.getLayoutParams();
             if ((lp.horizontalOffset == 0 && lp.verticalOffset == 0) ||
                     child.getAlpha() == 0f || child.getVisibility() != VISIBLE) {
@@ -608,7 +609,7 @@ public class StackViewVertical extends AdapterViewAnimator {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         int action = ev.getAction();
-        switch(action & MotionEvent.ACTION_MASK) {
+        switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN: {
                 if (mActivePointerId == INVALID_POINTER) {
                     mInitialX = ev.getX();
@@ -672,11 +673,9 @@ public class StackViewVertical extends AdapterViewAnimator {
                             (mStackMode == ITEMS_SLIDE_DOWN && swipeGestureTypeY == GESTURE_SLIDE_DOWN));
 
 
-
             boolean beginningOfStack = mLoopViews && adapterCount == 1 &&
                     ((mStackMode == ITEMS_SLIDE_DOWN && swipeGestureTypeY == GESTURE_SLIDE_UP) ||
                             (mStackMode == ITEMS_SLIDE_UP && swipeGestureTypeY == GESTURE_SLIDE_DOWN));
-
 
 
             int stackMode;
@@ -704,7 +703,6 @@ public class StackViewVertical extends AdapterViewAnimator {
             cancelHandleClick();
         }
     }
-
 
 
     /**
@@ -749,7 +747,7 @@ public class StackViewVertical extends AdapterViewAnimator {
                 } else if (mSwipeGestureType == GESTURE_SLIDE_UP) {
                     float r = -(deltaX + mTouchSlop * 1.0f) / mSlideAmount * 1.0f;
                     if (mStackMode == ITEMS_SLIDE_DOWN) r = 1 - r;
-                    mStackSlider.setYProgress(1-r);
+                    mStackSlider.setYProgress(1 - r);
 //                    mStackSlider.setXProgress(rx);
                     return true;
                 }
@@ -833,11 +831,11 @@ public class StackViewVertical extends AdapterViewAnimator {
         }
 
 
-        Log.d("==","mSwipeGestureType :: "+mSwipeGestureType);
+        Log.d("==", "mSwipeGestureType :: " + mSwipeGestureType);
 
         if (deltaX < mSwipeThreshold && mSwipeGestureType == GESTURE_SLIDE_UP
                 && mStackSlider.mMode == StackSlider.NORMAL_MODE) {
-            Log.d("===","1");
+            Log.d("===", "1");
             // We reset the gesture variable, because otherwise we will ignore showPrevious() /
             // showNext();
             mSwipeGestureType = GESTURE_NONE;
@@ -852,7 +850,7 @@ public class StackViewVertical extends AdapterViewAnimator {
         } else if (deltaX > mSwipeThreshold && mSwipeGestureType == GESTURE_SLIDE_DOWN
                 && mStackSlider.mMode == StackSlider.NORMAL_MODE) {
             //
-            Log.d("===","2");
+            Log.d("===", "2");
             // We reset the gesture variable, because otherwise we will ignore showPrevious() /
             // showNext();
             mSwipeGestureType = GESTURE_NONE;
@@ -865,8 +863,8 @@ public class StackViewVertical extends AdapterViewAnimator {
             }
 
             mHighlight.bringToFront();
-        } else if (mSwipeGestureType == GESTURE_SLIDE_DOWN ) {
-            Log.d("===","3");
+        } else if (mSwipeGestureType == GESTURE_SLIDE_DOWN) {
+            Log.d("===", "3");
             // Didn't swipe up far enough, snap back down
             int duration;
             float finalYProgress = (mStackMode == ITEMS_SLIDE_DOWN) ? 1 : 0;
@@ -885,7 +883,7 @@ public class StackViewVertical extends AdapterViewAnimator {
             pa.setInterpolator(new LinearInterpolator());
             pa.start();
         } else if (mSwipeGestureType == GESTURE_SLIDE_UP) {
-            Log.d("===","4");
+            Log.d("===", "4");
             // Didn't swipe down far enough, snap back up
             float finalYProgress = (mStackMode == ITEMS_SLIDE_DOWN) ? 0 : 1;
             int duration;
@@ -898,7 +896,7 @@ public class StackViewVertical extends AdapterViewAnimator {
 
             StackSlider animationSlider = new StackSlider(mStackSlider);
             PropertyValuesHolder snapBackY =
-                    PropertyValuesHolder.ofFloat("YProgress",finalYProgress);
+                    PropertyValuesHolder.ofFloat("YProgress", finalYProgress);
             PropertyValuesHolder snapBackX = PropertyValuesHolder.ofFloat("XProgress", 0.0f);
             ObjectAnimator pa = ObjectAnimator.ofPropertyValuesHolder(animationSlider,
                     snapBackX, snapBackY);
@@ -1022,7 +1020,7 @@ public class StackViewVertical extends AdapterViewAnimator {
                     mHighlight.setAlpha(highlightAlphaInterpolator(r));
                     break;
                 case BEGINNING_OF_STACK_MODE:
-                    r = (1-r) * 0.2f;
+                    r = (1 - r) * 0.2f;
                     viewLp.setHorizontalOffset(Math.round(stackDirection * r * mSlideAmount));
                     highlightLp.setHorizontalOffset(Math.round(stackDirection * r * mSlideAmount));
                     mHighlight.setAlpha(highlightAlphaInterpolator(r));
@@ -1053,7 +1051,7 @@ public class StackViewVertical extends AdapterViewAnimator {
                 }
             }
 
-            switch (mMode){
+            switch (mMode) {
                 case NORMAL_MODE:
                 case END_OF_STACK_MODE:
                 case BEGINNING_OF_STACK_MODE:
@@ -1175,9 +1173,9 @@ public class StackViewVertical extends AdapterViewAnimator {
         final int measuredWidth = getMeasuredWidth();
         final int measuredHeight = getMeasuredHeight();
 
-        final int childWidth = Math.round(measuredWidth*(1-PERSPECTIVE_SHIFT_FACTOR_X))
+        final int childWidth = Math.round(measuredWidth * (1 - PERSPECTIVE_SHIFT_FACTOR_X))
                 - getPaddingLeft() - getPaddingRight();
-        final int childHeight = Math.round(measuredHeight*(1-PERSPECTIVE_SHIFT_FACTOR_Y))
+        final int childHeight = Math.round(measuredHeight * (1 - PERSPECTIVE_SHIFT_FACTOR_Y))
                 - getPaddingTop() - getPaddingBottom();
 
         int maxWidth = 0;
@@ -1214,12 +1212,12 @@ public class StackViewVertical extends AdapterViewAnimator {
     }
 
 
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec,heightMeasureSpec);
-        int widthSpecSize = View.MeasureSpec.getSize(widthMeasureSpec);        ;
-        int heightInPX = DISPLAY_METRICS.heightPixels/3;
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int widthSpecSize = View.MeasureSpec.getSize(widthMeasureSpec);
+        ;
+        int heightInPX = DISPLAY_METRICS.heightPixels / 3;
         int heightSpecSize = MeasureSpec.makeMeasureSpec(heightInPX, MeasureSpec.AT_MOST);
         final int widthSpecMode = View.MeasureSpec.getMode(widthMeasureSpec);
         final int heightSpecMode = MeasureSpec.makeMeasureSpec(heightInPX, MeasureSpec.AT_MOST);
@@ -1227,7 +1225,7 @@ public class StackViewVertical extends AdapterViewAnimator {
 
         // We need to deal with the case where our parent hasn't told us how
         // big we should be. In this case we should
-        float factorY = 1/(1 - PERSPECTIVE_SHIFT_FACTOR_Y);
+        float factorY = 1 / (1 - PERSPECTIVE_SHIFT_FACTOR_Y);
         if (heightSpecMode == View.MeasureSpec.UNSPECIFIED) {
             heightSpecSize = haveChildRefSize ?
                     Math.round(mReferenceChildHeight * (1 + factorY)) +
@@ -1247,7 +1245,7 @@ public class StackViewVertical extends AdapterViewAnimator {
             }
         }
 
-        float factorX = 1/(1 - PERSPECTIVE_SHIFT_FACTOR_X);
+        float factorX = 1 / (1 - PERSPECTIVE_SHIFT_FACTOR_X);
         if (widthSpecMode == View.MeasureSpec.UNSPECIFIED) {
 
             widthSpecSize = haveChildRefSize ?

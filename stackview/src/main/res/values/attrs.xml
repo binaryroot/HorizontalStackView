@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ViewAnimatorHorizontal">
+        <!-- Identifier for the animation to use when a view is shown. -->
+        <attr name="inAnimationHorizontal" format="reference" />
+        <!-- Identifier for the animation to use when a view is hidden. -->
+        <attr name="outAnimationHorizontal" format="reference" />
+        <!-- Defines whether to animate the current View when the ViewAnimation
+             is first displayed. -->
+        <attr name="animateFirstViewHorizontal" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="AdapterViewAnimatorHorizontal">
+
+        <attr name="stackViewStyleHorizontal" format="reference" />
+
+        <!-- Identifier for the animation to use when a view is shown. -->
+        <attr name="inAnimationHorizontal" />
+        <!-- Identifier for the animation to use when a view is hidden. -->
+        <attr name="outAnimationHorizontal" />
+        <!--Defines whether the animator loops to the first view once it
+        has reached the end of the list. -->
+        <attr name="loopViewsHorizontal" format="boolean" />
+        <!-- Defines whether to animate the current View when the ViewAnimation
+        is first displayed. -->
+        <attr name="animateFirstViewHorizontal" />
+    </declare-styleable>
+
+    <declare-styleable name="StackViewHorizontal">
+        <!-- Color of the res-out outline. -->
+        <attr name="resOutColorHorizontal" format="color" />
+        <!-- Color of the outline of click feedback. -->
+        <attr name="clickColorHorizontal" format="color" />
+    </declare-styleable>
+</resources>
